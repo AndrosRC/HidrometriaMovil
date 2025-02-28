@@ -1,0 +1,7 @@
+{
+  "name": "Hidrometria",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
