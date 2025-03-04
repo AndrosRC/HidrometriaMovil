@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class UsersService {
 
-  private apiUrl = "http://192.168.120.170:5000";
+  private apiUrl = "https://hidrometriaapi.onrender.com";
 
   constructor(private http: HttpClient) { }
 
