@@ -1,0 +1,23 @@
+<ion-header [translucent]="false" id="title">
+  <ion-toolbar>
+    <ion-title id="header">HidroMetria</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div>
+    <h1 id="titulo">Prueba de Funciones</h1>
+    <p>Prueba las diferentes funcionalidades del sistema</p>
+  </div>
+
+  <div>
+    <ion-card id="tarjeta">
+      <ion-card-content>
+        <ion-button expand="block" (click)="enviarPing()">Enviar Ping</ion-button>
+        <ion-button expand="block" (click)="abrirValvula()">Abrir Válvula</ion-button>
+        <ion-button expand="block" (click)="cerrarValvula()">Cerrar Válvula</ion-button>
+        <ion-button expand="block" (click)="medirFlujo()">Medir Flujo</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

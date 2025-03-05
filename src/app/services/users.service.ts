@@ -34,4 +34,22 @@ export class UsersService {
   public loginUser(user: { usuario: string; pass: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, user);
   }
+
+   public abrirValvula(tiempo: number): Observable<any> {
+    const data = { tiempo: tiempo };
+    return this.http.post(`${this.apiUrl}/abrir`, data);
+  }
+
+  public cerrarValvula(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/cerrar`);
+  }
+
+  public recibirFlujo(flujo: number, litros: number): Observable<any> {
+    const data = { flujo: flujo, litros: litros };
+    return this.http.post(`${this.apiUrl}/flujo`, data);
+  }
+
+  public verificarConexionESP32(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/ping`);
+  }
 }
