@@ -28,12 +28,16 @@ export class LogInPage  {
       usuario: this.usuario,
       pass: this.contrasena
     };
-
+  
     this.usersService.loginUser(data).subscribe(response => {
       console.log(response);
       if (response.Mensaje === "Login exitoso") {
         alert('Inicio de sesión exitoso');
-        this.router.navigate(['tabs/tabs/tab1'])
+        
+        // Guardar el ID del usuario en localStorage
+        localStorage.setItem('userId', response.idUsuario); 
+  
+        this.router.navigate(['tabs/tabs/tab1']);
       } else {
         alert('Credenciales incorrectas');
       }
@@ -41,5 +45,5 @@ export class LogInPage  {
       console.error(error);
       alert('Error al iniciar sesión');
     });
-  }
+  }  
 }

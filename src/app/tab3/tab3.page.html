@@ -3,15 +3,18 @@
     <ion-title id="header">HidroMetria</ion-title>
   </ion-toolbar>
 </ion-header>
+
 <ion-content [fullscreen]="true" class="content-custom">
   <div class="headAdmin">
     <h1 id="titulo">HidroMetria</h1>
     <h2>Reportar</h2>
-    <p>Reporta algun problema o incidencia</p>
+    <p>Reporta algún problema o incidencia</p>
   </div>
+
   <ion-card>
     <ion-item>
-      <ion-select label="Tipo de incidencia" interface="popover" placeholder="Selecciona Una">
+      <ion-label>Tipo de incidencia</ion-label>
+      <ion-select placeholder="Selecciona Una" [(ngModel)]="reportType">
         <ion-select-option value="Fuga de agua">Fuga de agua</ion-select-option>
         <ion-select-option value="Falta de agua">Falta de agua</ion-select-option>
         <ion-select-option value="Baja presion">Baja presion</ion-select-option>
@@ -20,17 +23,22 @@
       </ion-select>
     </ion-item>
   </ion-card>
+
   <ion-card class="card-custom">
     <ion-item>
-      <ion-textarea label="Descripcion" placeholder="Describe tu problema con detalle"></ion-textarea>
+      <ion-label position="stacked">Descripción</ion-label>
+      <ion-textarea placeholder="Describe tu problema con detalle" [(ngModel)]="reportDescription"></ion-textarea>
     </ion-item>
   </ion-card>
+
   <ion-card class="card-custom">
     <ion-item>
-      <ion-textarea label="Ubicacion" placeholder="Ingresa la ubicacion de manera exacta y precisa"></ion-textarea>
+      <ion-label position="stacked">Ubicación</ion-label>
+      <ion-textarea placeholder="Ingresa la ubicación de manera exacta y precisa" [(ngModel)]="reportLocation"></ion-textarea>
     </ion-item>
   </ion-card>
+
   <div class="boton">
-    <ion-button class="btn-custom">Enviar Reporte</ion-button>
+    <ion-button class="btn-custom" (click)="submitReport()">Enviar Reporte</ion-button>
   </div>
 </ion-content>

@@ -15,5 +15,9 @@ export const routes: Routes = [
   },
   {
     path:'**', redirectTo: 'log-in'
+  },
+  {
+    path: 'perfil',
+    loadComponent: () => import('./perfil/perfil.page').then( m => m.PerfilPage)
   }
 ];

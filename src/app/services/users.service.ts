@@ -52,4 +52,13 @@ export class UsersService {
   public verificarConexionESP32(): Observable<any> {
     return this.http.get(`${this.apiUrl}/ping`);
   }
+
+  public getFlujoAgua(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/flujo-agua`);
+  }
+
+  public postReporte(reportData: { tipo: string; descripcion: string; ubicacion: string; resuelto: boolean }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/incidencias`, reportData);
+  }
+  
 }
