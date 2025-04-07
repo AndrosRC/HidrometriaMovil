@@ -15,5 +15,9 @@ export const routes: Routes = [
   },
   {
     path:'**', redirectTo: 'log-in'
+  },  {
+    path: 'pago',
+    loadComponent: () => import('./pago/pago.page').then( m => m.PagoPage)
   }
+
 ];

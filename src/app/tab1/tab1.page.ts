@@ -1,107 +1,220 @@
-import { Component } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, IonItemDivider, IonLabel, IonAccordionGroup, IonAccordion, IonItem } from '@ionic/angular/standalone';
-import { GoogleChartsModule, ChartType } from 'angular-google-charts';
+// Importaciones básicas de Angular
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+// Importaciones de componentes Ionic
+import { 
+  IonHeader, IonToolbar, IonTitle, IonContent, 
+  IonGrid, IonRow, IonCol, IonCard, IonCardHeader, 
+  IonCardTitle, IonCardContent, IonList, IonItemDivider, 
+  IonLabel, IonAccordionGroup, IonAccordion, IonItem, 
+  IonNote, IonBadge, IonButtons, IonButton, IonIcon,
+  IonRefresher, IonRefresherContent
+} from '@ionic/angular/standalone';
+
+// Importaciones para gráficas y servicios
+import { GoogleChartsModule, ChartType } from 'angular-google-charts';
+import { UsersService } from '../services/users.service';
+
 @Component({
-  selector: 'app-tab1',
-  templateUrl: 'tab1.page.html',
-  styleUrls: ['tab1.page.scss'],
-  imports: [CommonModule, GoogleChartsModule, IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, IonItemDivider, IonLabel, IonAccordionGroup, IonAccordion, IonItem],
+  selector: 'app-tab1', // Selector del componente
+  templateUrl: 'tab1.page.html', // Plantilla asociada
+  styleUrls: ['tab1.page.scss'], // Estilos asociados
+  standalone: true, // Componente autónomo (Angular 15+)
+  imports: [ // Módulos y componentes necesarios
+    CommonModule, 
+    GoogleChartsModule, 
+    IonHeader, IonToolbar, IonTitle, IonContent, 
+    IonGrid, IonRow, IonCol, IonCard, IonCardHeader, 
+    IonCardTitle, IonCardContent, IonList, IonItemDivider, 
+    IonLabel, IonAccordionGroup, IonAccordion, IonItem,
+    IonNote, IonBadge, IonButtons, IonButton, IonIcon,
+    IonRefresher, IonRefresherContent
+  ],
 })
-export class Tab1Page {
-  totalConsumo = 7200; // Litros en el mes
-  promedioDiario = 240; // Promedio de litros al día
-  diasCriticos = 5; // Días con consumo alto
+export class Tab1Page implements OnInit {
+  // Variables para métricas principales
+  totalConsumo = 0; // Litros totales consumidos
+  promedioDiario = 0; // Promedio diario de consumo
+  diasCriticos = 0; // Días con consumo alto
 
-  // 🔹 Gráfico de Consumo Diario (Dona)
+  // Configuración para gráfica de pastel
   chartType: ChartType = ChartType.PieChart;
-  chartColumns = ['Día', 'Litros'];
-  chartData = [
-    ['Lunes', 40],
-    ['Martes', 30],
-    ['Miércoles', 60],
-    ['Jueves', 50],
-    ['Viernes', 45],
-    ['Sábado', 55],
-    ['Domingo', 35]
-  ];
-  chartOptions = {
-    title: 'Consumo de Agua Diario',
-    pieHole: 0.4,
-    backgroundColor: 'transparent',
-    colors: ['#4A90E2', '#357ABD', '#23527C'],
-    chartArea: { width: '100%', height: '90%' },
-    legend: { position: 'right', textStyle: { fontSize: 14 } },
-  };
+  chartColumns = ['Mes', 'Litros'];
+  chartData: any[] = [];
 
-  // 🔹 Comparativa de Consumo Mensual (Barras)
+  // Configuración para gráfica de barras
   comparisonChartType: ChartType = ChartType.ColumnChart;
-  comparisonChartData = [
-    ['Enero', 1200],
-    ['Febrero', 1100],
-    ['Marzo', 900],
-    ['Abril', 1300],
-    ['Mayo', 1250],
-    ['Junio', 1400]
-  ];
   comparisonChartColumns = ['Mes', 'Litros Consumidos'];
-  comparisonChartOptions = {
-    title: 'Comparativa de Consumo Mensual',
-    backgroundColor: 'transparent',
-    colors: ['#1E88E5'],
-    legend: { position: 'none' },
-    vAxis: { title: 'Litros', textStyle: { fontSize: 14 } },
-    hAxis: { title: 'Mes', textStyle: { fontSize: 14 } },
-    chartArea: { width: '90%', height: '85%' }
-  };
+  comparisonChartData: any[] = [];
 
-  // 🔹 Nueva Gráfica de Radar (Consumo Diario vs. Promedio)
+  // Configuración para gráfica de línea
   radarChartType: ChartType = ChartType.LineChart;
-  radarChartData = [
-    ['Lunes', 40, 50],
-    ['Martes', 30, 40],
-    ['Miércoles', 60, 45],
-    ['Jueves', 50, 55],
-    ['Viernes', 45, 50],
-    ['Sábado', 55, 60],
-    ['Domingo', 35, 42]
-  ];
   radarChartColumns = ['Día', 'Consumo Real (L)', 'Consumo Promedio (L)'];
-  radarChartOptions = {
-    title: 'Consumo Diario vs. Promedio',
-    backgroundColor: 'transparent',
-    colors: ['#4A90E2', '#23527C'],
-    legend: { position: 'bottom' },
-    hAxis: { title: 'Día' },
-    vAxis: { title: 'Litros' },
-    chartArea: { width: '90%', height: '85%' }
-  };
+  radarChartData: any[] = [];
 
-  // 🔹 Historial de Consumo por Mes (Lista Desplegable)
-  historialMensual = [
-    {
-      mes: 'Enero',
-      consumo: ['Día 1: 40L', 'Día 2: 35L', 'Día 3: 50L'],
-      abierto: false
-    },
-    {
-      mes: 'Febrero',
-      consumo: ['Día 1: 45L', 'Día 2: 30L', 'Día 3: 55L'],
-      abierto: false
-    },
-    {
-      mes: 'Marzo',
-      consumo: ['Día 1: 38L', 'Día 2: 48L', 'Día 3: 42L'],
-      abierto: false
-    }
-  ];
+  // Historial de consumo organizado por meses
+  historialMensual: any[] = [];
 
-  // Función para alternar la apertura/cierre de la lista desplegable
-  toggleHistorial(mes: any) {
-    mes.abierto = !mes.abierto;
+  // Nombres de los meses para mostrar
+  monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 
+               'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+
+  constructor(private usersService: UsersService) {}
+
+  /**
+   * Método del ciclo de vida: se ejecuta al inicializar el componente
+   */
+  ngOnInit() {
+    this.loadWaterData(); // Cargar datos al iniciar
   }
 
-  constructor() { 
+  /**
+   * Maneja el evento de refresh (tanto del botón como del pull-to-refresh)
+   * @param event Evento opcional del refresher
+   */
+  async handleRefresh(event?: any) {
+    try {
+      await this.loadWaterData(); // Recargar los datos
+      
+      // Si el evento viene del refresher, lo completamos
+      if (event) {
+        event.target.complete(); // Finalizar animación de refresh
+      }
+    } catch (error) {
+      console.error('Error al refrescar datos:', error);
+      if (event) {
+        event.target.complete(); // Asegurar que se complete incluso con error
+      }
+    }
+  }
+
+  /**
+   * Carga los datos de consumo de agua desde el servicio
+   */
+  async loadWaterData() {
+    try {
+      // Obtener datos del servicio
+      const response = await this.usersService.getFlujoAgua().toPromise();
+      const flujoAgua = response?.Respuesta || [];
+      
+      // Procesar los datos recibidos
+      this.processWaterData(flujoAgua);
+    } catch (error) {
+      console.error('Error loading water data:', error);
+      throw error; // Relanzar el error para manejarlo en handleRefresh
+    }
+  }
+
+  /**
+   * Procesa los datos de consumo y actualiza las propiedades del componente
+   * @param flujoAgua Array con los datos de consumo
+   */
+  processWaterData(flujoAgua: any[]) {
+    // Calcular el total consumido sumando todos los litros
+    this.totalConsumo = flujoAgua.reduce((sum, flujo) => sum + flujo.litros, 0);
+    
+    // Calcular días únicos para el promedio diario
+    const diasUnicos = new Set(flujoAgua.map(f => f.fecha.split(' ')[0])).size;
+    this.promedioDiario = diasUnicos > 0 ? this.totalConsumo / diasUnicos : 0;
+    
+    // Contar días con consumo mayor a 50L como "críticos"
+    this.diasCriticos = flujoAgua.filter(f => f.litros > 50).length;
+
+    // Preparar datos para gráficas
+    const consumoMensual = this.agruparPorMes(flujoAgua);
+    this.chartData = consumoMensual.map(mes => [mes.mes, mes.total_litros]);
+    this.comparisonChartData = [...this.chartData];
+    
+    // Preparar datos para gráfica de últimos 7 días vs promedio
+    this.radarChartData = flujoAgua.slice(0, 7).map(flujo => [
+      flujo.fecha.split('-')[2], // Día del mes
+      flujo.litros, // Consumo real
+      this.promedioDiario // Consumo promedio
+    ]);
+
+    // Generar historial detallado por mes
+    this.historialMensual = this.agruparHistorialPorMes(flujoAgua);
+  }
+
+  /**
+   * Agrupa los datos de consumo por mes para las gráficas
+   * @param flujoAgua Array con los datos de consumo
+   * @returns Array de objetos agrupados por mes
+   */
+  agruparPorMes(flujoAgua: any[]): any[] {
+    const meses: { [key: string]: any } = {};
+
+    flujoAgua.forEach(flujo => {
+      const [fullDate] = flujo.fecha.split(' ');
+      const [year, monthNum] = fullDate.split('-');
+      const key = `${year}-${monthNum}`;
+      
+      if (!meses[key]) {
+        meses[key] = {
+          year,
+          monthNum,
+          mes: `${this.monthNames[parseInt(monthNum)-1]} ${year}`,
+          total_litros: 0
+        };
+      }
+      meses[key].total_litros += flujo.litros;
+    });
+
+    // Ordenar cronológicamente
+    return Object.values(meses).sort((a, b) => 
+      `${a.year}-${a.monthNum}`.localeCompare(`${b.year}-${b.monthNum}`)
+    );
+  }
+
+  /**
+   * Organiza el historial detallado por mes y día
+   * @param flujoAgua Array con los datos de consumo
+   * @returns Array de objetos con historial por mes
+   */
+  agruparHistorialPorMes(flujoAgua: any[]): any[] {
+    const historial: { [key: string]: any } = {};
+
+    flujoAgua.forEach(flujo => {
+      const [fullDate] = flujo.fecha.split(' ');
+      const [year, monthNum, day] = fullDate.split('-');
+      const key = `${year}-${monthNum}`;
+      
+      if (!historial[key]) {
+        historial[key] = {
+          mes: `${this.monthNames[parseInt(monthNum)-1]} ${year}`,
+          year,
+          monthNum,
+          consumo: [],
+          total_litros: 0,
+          abierto: false
+        };
+      }
+      
+      historial[key].consumo.push({
+        fecha: fullDate,
+        dia: day,
+        litros: flujo.litros,
+        texto: `Día ${day}: ${flujo.litros}L`
+      });
+      historial[key].total_litros += flujo.litros;
+    });
+
+    // Ordenar de más reciente a más antiguo
+    return Object.values(historial).sort((a, b) => 
+      `${b.year}-${b.monthNum}`.localeCompare(`${a.year}-${a.monthNum}`)
+    );
+  }
+
+  /**
+   * Obtiene el nombre del día a partir de una fecha YYYY-MM-DD
+   * @param fecha String con formato YYYY-MM-DD
+   * @returns Nombre abreviado del día (Dom, Lun, Mar, etc.)
+   */
+  getDiaNombre(fecha: string): string {
+    const dias = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+    const [year, month, day] = fecha.split('-');
+    const date = new Date(parseInt(year), parseInt(month)-1, parseInt(day));
+    return dias[date.getDay()];
   }
 }
