@@ -32,6 +32,12 @@ export class LogInPage {
   // para la autenticación y 'Router' para la navegación.
   constructor(private usersService: UsersService, private router: Router) { }
 
+  // Esto limpia los campos de usuario y contraseña para evitar que se queden datos anteriores.
+  ionViewWillEnter() {
+    this.usuario = '';
+    this.contrasena = '';
+  }
+
   // Método para redirigir al usuario a la página de registro.
   redirigirRegistro() {
     this.router.navigate(['registro']);
@@ -56,6 +62,7 @@ export class LogInPage {
         alert('Inicio de sesión exitoso');
         this.userId = response.Usuario.id;
         this.esAdmin = response.Usuario.admin ?? false;
+
         // Guarda el ID del usuario y el estado de administrador en 
         // el almacenamiento local del navegador.
         localStorage.setItem('userId', this.userId);
@@ -64,6 +71,7 @@ export class LogInPage {
           userId: localStorage.getItem('userId'),
           esAdmin: localStorage.getItem('esAdmin')
         });
+
         // Navega a la página principal de la aplicación 
         // después del inicio de sesión exitoso.
         this.router.navigate(['tabs/tabs/tab1']);

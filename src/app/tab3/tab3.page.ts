@@ -8,6 +8,8 @@ import {
 } from '@ionic/angular/standalone';
 import { UsersService } from '../services/users.service'; // Servicio personalizado para obtener datos del usuario
 import { Router } from '@angular/router'; // Para navegación entre páginas
+import { addIcons } from 'ionicons'; // Para agregar iconos personalizados
+import { shieldCheckmark } from 'ionicons/icons';
 
 @Component({
   selector: 'app-tab3', // Nombre del selector del componente
@@ -42,7 +44,9 @@ export class Tab3Page implements OnInit {
   constructor(
     private usersService: UsersService, // Inyección del servicio de usuarios
     private router: Router // Inyección del servicio de navegación
-  ) { }
+  ) {
+    addIcons ({shieldCheckmark}); // Agregar icono personalizado
+   }
 
   // Método que se ejecuta al iniciar el componente
   ngOnInit() {
