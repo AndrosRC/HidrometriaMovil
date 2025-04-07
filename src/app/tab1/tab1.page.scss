@@ -6,6 +6,8 @@ ion-content {
   
   ion-header {
     --ion-background-color: #073359;
+    display: flex;
+    justify-content: center;
   }
   #title ion-header {
     --background: #073359;
@@ -15,15 +17,7 @@ ion-content {
     text-align: center;
     letter-spacing: 3px;
   }
-  #titulo {
-    text-align: center;
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #4880B8;
-    margin-top: 20px;
-    letter-spacing: 1px;
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  }
+
   /* Estilos para el historial */
   ion-accordion-group {
     background: white;
@@ -140,14 +134,7 @@ ion-item-divider {
 .ion-col {
   margin-bottom: 40px;
 }
-#titulo {
-  text-align: center;
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: #4880B8;
-  letter-spacing: 1px;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-}
+
 
 /* Contenedor del encabezado de la pantalla */
 .headAdmin {
@@ -155,3 +142,15 @@ ion-item-divider {
   font-size: 14px;
   color: #5a5a5a;
 }
+
+ion-toolbar {
+  justify-content: center;
+  align-items: center;
+}
+
+/* Botones en el header */
+ion-buttons {
+  position: absolute;
+  right: 10px;
+}
+

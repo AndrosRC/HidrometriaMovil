@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">HidroMetria</string>
+    <string name="title_activity_main">HidroMetria</string>
+    <string name="package_name">com.myapp.hidrometria</string>
+    <string name="custom_url_scheme">com.myapp.hidrometria</string>
+</resources>

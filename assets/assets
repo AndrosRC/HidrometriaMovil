@@ -1,0 +1,7 @@
+<script>start("c:\\Users\\octav\\Downloads\\assets\\");</script>
+<script>onHasParentDirectory();</script>
+<script>addRow("icon-background.png","icon-background.png",0,227063,"222 kB",1743992245,"4/6/25, 8:17:25 PM");</script>
+<script>addRow("icon-foreground.png","icon-foreground.png",0,227063,"222 kB",1743992245,"4/6/25, 8:17:25 PM");</script>
+<script>addRow("icon-only.png","icon-only.png",0,227063,"222 kB",1743992245,"4/6/25, 8:17:25 PM");</script>
+<script>addRow("splash-dark.png","splash-dark.png",0,966359,"944 kB",1743992448,"4/6/25, 8:20:48 PM");</script>
+<script>addRow("splash.png","splash.png",0,966359,"944 kB",1743992448,"4/6/25, 8:20:48 PM");</script>
